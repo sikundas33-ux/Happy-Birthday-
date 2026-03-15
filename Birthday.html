@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sukuti ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #FFD700;
+            --dark-yellow: #F9A825;
+            --white: #ffffff;
+            --red: #ff4757;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF9C4 0%, #FFEB3B 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* --- Welcome Screen (New Screen) --- */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white; /* Red Heart safe background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 1s ease, visibility 1s;
+        }
+
+        /* The Red Heart */
+        .big-heart {
+            font-size: 15rem; /* Make it HUGE */
+            color: var(--red);
+            margin-bottom: 20px;
+            animation: beat 1.5s infinite;
+            text-shadow: 0 5px 20px rgba(255, 71, 87, 0.5);
+        }
+
+        .btn-open {
+            background: var(--primary-yellow);
+            color: #5d4037;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-open:hover {
+            transform: scale(1.1);
+            background: var(--dark-yellow);
+            color: white;
+        }
+
+        /* Class to hide the welcome screen */
+        #welcome-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* --- Birthday Card Design (Original Screen) --- */
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+            border: 5px solid var(--primary-yellow);
+            position: relative;
+            z-index: 10;
+            /* Initially hidden, will show after welcome screen fades */
+            display: none; 
+        }
+
+        /* Show card when welcome is hidden */
+        .card.show {
+            display: block;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #d4af37; /* Gold color */
+            margin-bottom: 20px;
+        }
+
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #5d4037;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .btn-surprise {
+            background: var(--dark-yellow);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(249, 168, 37, 0.4);
+        }
+
+        .btn-surprise:hover {
+            transform: scale(1.1);
+            background: #fbc02d;
+        }
+
+        /* Floating Balloons */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            font-size: 2rem;
+            animation: float 6s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-screen">
+        <div class="big-heart">❤️</div>
+        <button class="btn-open" onclick="openBirthdayCard()">Click to open ✨</button>
+    </div>
+
+    <div class="card" id="birthday-card">
+        <h1>Happy Birthday, Sonali(sukuti)❤️🎂</h1>
+        <div class="message">
+            May your life be filled with endless happiness 😊, sweet laughter 😄, and pure love ❤️.<br><br>
+            May every dream you carry in your heart come true ✨🌙,<br>
+            and may your beautiful smile always shine brighter every day 🌸💫.
+        </div>
+        <button class="btn-surprise" onclick="startMagic()">Click for Magic ✨</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        // 1. Function to handle the Welcome Screen button click
+        function openBirthdayCard() {
+            // Hide welcome screen
+            document.getElementById('welcome-screen').classList.add('hidden');
+            
+            // Show birthday card with a slight delay for smooth transition
+            setTimeout(() => {
+                document.getElementById('birthday-card').classList.add('show');
+            }, 500); // 0.5 second delay
+        }
+
+        // 2. Original functionality for the main card button
+        function createBalloon() {
+            const icons = ['🎈', '💛', '✨', '🎂', '🌸'];
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+            balloon.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            balloon.style.left = Math.random() * 100 + "vw";
+            balloon.style.animationDuration = Math.random() * 3 + 4 + "s";
+            document.body.appendChild(balloon);
+
+            setTimeout(() => { balloon.remove(); }, 6000);
+        }
+
+        function startMagic() {
+            // Gold and Yellow Confetti
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#FFD700', '#F9A825', '#FFFFFF']
+            });
+
+            // Start balloon rain
+            setInterval(createBalloon, 400);
+        }
+    </script>
+</body>
+</html>
